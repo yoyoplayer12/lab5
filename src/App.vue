@@ -1,36 +1,33 @@
 <script setup>
-import VideoCard from './components/VideoCard.vue';
-import CommentSection from './components/CommentSection.vue';
-import UsernameSpace from './components/UsernameSpace.vue';
+import VideoPlayer from './components/Video/VideoPlayer.vue'
+import VideoDetails from './components/Video/VideoDetails.vue'
+import Chat from './components/Chat/Chat.vue'
+import { ref } from 'vue';
+
+let newDescription = ref('Default description');
+
+const updateVideo = (description) =>{
+  newDescription.value = description;
+}
+//listen for emit description
+
 </script>
 
 <template>
-  <div class="lab">
-    <div class="videocard">
-      <VideoCard />
+  <div class="content">
+    <div>
+      <VideoPlayer @update:video-description="updateVideo" />
     </div>
-    <div class="commentsection">
-      <UsernameSpace />
-      <CommentSection />
+    <div>
+      <VideoDetails :description="newDescription" />
+      <Chat />
     </div>
   </div>
 </template>
 
 <style scoped>
-.videocard {
-  width: 50vw;
-  height: 100vh;
-}
-
-.commentsection {
-  width: 50vw;
-  height: 100vh;
-  background-color: #f2f2f2;
-}
-
-.lab {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+  .content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 </style>
