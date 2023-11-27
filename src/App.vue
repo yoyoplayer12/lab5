@@ -4,10 +4,12 @@ import VideoDetails from './components/Video/VideoDetails.vue'
 import Chat from './components/Chat/Chat.vue'
 import { ref } from 'vue';
 
-let newTitle = ref('Default Title');
+let newTitle = ref('');
+let newUsername = ref('');
 
-const updateVideo = (title) =>{
+const updateVideo = (title, username) =>{
   newTitle.value = title;
+  newUsername.value = username;
 }
 //listen for emit description
 
@@ -16,10 +18,10 @@ const updateVideo = (title) =>{
 <template>
   <div class="content">
     <div>
-      <VideoPlayer @update:video-title="updateVideo" />
+      <VideoPlayer @update:video="updateVideo" />
     </div>
     <div>
-      <VideoDetails :title="newTitle" />
+      <VideoDetails :title="newTitle" :username="newUsername" />
       <Chat />
     </div>
   </div>

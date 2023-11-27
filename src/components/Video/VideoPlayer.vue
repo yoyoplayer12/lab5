@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 //define emits
-const emit = defineEmits(['update:videoTitle']);
+const emit = defineEmits(['update:video']);
 let videoUrl = ref('');
 let videoNumber = ref(0);
 let Videos = reactive({
@@ -16,7 +16,7 @@ onMounted(async () => {
 
         Videos.data = data.data[0].videos;
         //emit
-        emit('update:videoTitle', Videos.data[0].title);
+        emit('update:video', Videos.data[0].title, Videos.data[0].username);
     }
 });
 
