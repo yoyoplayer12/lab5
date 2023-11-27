@@ -6,8 +6,8 @@ import { ref } from 'vue';
 
 let newTitle = ref('Default Title');
 
-const updateVideo = (description) =>{
-  newDescription.value = description;
+const updateVideo = (title) =>{
+  newTitle.value = title;
 }
 //listen for emit description
 
@@ -16,10 +16,10 @@ const updateVideo = (description) =>{
 <template>
   <div class="content">
     <div>
-      <VideoPlayer @update:video-description="updateVideo" />
+      <VideoPlayer @update:video-title="updateVideo" />
     </div>
     <div>
-      <VideoDetails :description="newTitle" />
+      <VideoDetails :title="newTitle" />
       <Chat />
     </div>
   </div>
