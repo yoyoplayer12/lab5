@@ -71,4 +71,7 @@ button {
 #buttons {
     height: 10vh;
 }
+button:hover{
+    cursor: pointer;
+}
 </style>
