@@ -45,8 +45,7 @@ const arrowDown = () => {
 
 <template>
     <div>
-        <iframe id="video" :src="videoUrl + '?autoplay=1&mute=1&controls=1&loop=1&playlist=<videoId>'" frameborder="0"
-            allowfullscreen></iframe>
+        <iframe id="video" :src="videoUrl + '?autoplay=1&mute=1&controls=1&loop=1&playlist=<videoId>'" frameborder="0"></iframe>
         <div id="buttons">
             <button @click="arrowUp">Next</button>
             <button @click="arrowDown">Previous</button>

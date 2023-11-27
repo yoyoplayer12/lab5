@@ -4,7 +4,7 @@ import VideoDetails from './components/Video/VideoDetails.vue'
 import Chat from './components/Chat/Chat.vue'
 import { ref } from 'vue';
 
-let newDescription = ref('Default description');
+let newTitle = ref('Default Title');
 
 const updateVideo = (description) =>{
   newDescription.value = description;
@@ -19,7 +19,7 @@ const updateVideo = (description) =>{
       <VideoPlayer @update:video-description="updateVideo" />
     </div>
     <div>
-      <VideoDetails :description="newDescription" />
+      <VideoDetails :description="newTitle" />
       <Chat />
     </div>
   </div>
