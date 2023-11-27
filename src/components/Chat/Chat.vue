@@ -4,6 +4,8 @@ import { ref, reactive, onMounted, watch } from 'vue'
 const props = defineProps(["url"]);
 let message = ref(''); // int, string, boolean (neemt bij typen value op)
 let videoUrl = ref(props.url);
+let usernameData = ref('');
+let TheNewusername = 'Anonymous';
 let comments = reactive({
     data: [],
 });
@@ -14,7 +16,6 @@ watch(() => props.url, (newUrl) => {
 const fetchComments = async () => {
     const response = await fetch(`https://lab5api.onrender.com/api/v1/comments/video/${encodeURIComponent(videoUrl.value)}`);
     const data = await response.json();
-    console.log(data['data']['comment']);
     if (data['data']['comment'] == "There are no comments yet.") {
         data['data']['comment'] = [];
     }
@@ -35,7 +36,7 @@ const addComment = async () => {
                 },
                 body: JSON.stringify({
                     text: message.value,
-                    username: 'Zwabber',
+                    username: usernameData.value,
                     videoUrl: videoUrl.value,
                 }),
             });
@@ -67,20 +68,33 @@ const formatTimestamp = (timestamp) => {
         return commentDate.toLocaleString(undefined, { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
     }
 };
+const updateUsername = () => {
+    if (usernameData.value) {
+        usernameData.value = usernameData.value.trim();
+        TheNewusername = usernameData.value;
+    }
+    else {
+        usernameData.value = '';
+        TheNewusername = 'Anonymous';
+    }
+}
 </script>
 
 <template>
     <div>
         <h3>Chat</h3>
-        <ul>
+        <label for="username" class="usernamelabel">Enter a Username:</label>
+        <input id="username" v-model="usernameData" @input="updateUsername" placeholder="Username" />
+        <ul class="commentul">
             <div v-for="c in comments.data" class="comment">
-                <li>{{ c['username'] }}: {{ c['text'] }}</li>
+                <li class="username">{{ c['username'] }}</li>
+                <li>{{ c['text'] }}</li>
                 <li class="timestamp">{{ formatTimestamp(c['timestamp']) }}</li>
             </div>
 
         </ul>
         <div>
-            <input v-model="message" @keyup.enter="addComment" type="text" name="Comment" placeholder="Aa" id="">
+            <input class="commentsend" v-model="message" @keyup.enter="addComment" type="text" name="Comment" placeholder="Aa" id="">
             <button @click="addComment">Send</button>
         </div>
     </div>
@@ -108,7 +122,29 @@ h3 {
     font-size: 10px;
     color: grey;
 }
-
 .comment {
     padding-bottom: 15px;
-}</style>
+}
+.usernamelabel{
+    margin-left: 10px;
+    margin-right: 15px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.commentul{
+    background-color: rgb(224, 224, 224);
+    border-radius: 15px;
+    height:500px;
+    width: 500px;
+    word-wrap: break-word;
+    padding: 30px;
+    overflow: auto;
+}
+.username{
+    font-weight: bold;
+    font-size: 13px;
+}
+.commentsend{
+    width: 400px;
+}
+</style>
