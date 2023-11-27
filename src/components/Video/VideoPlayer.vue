@@ -29,6 +29,7 @@ const arrowUp = () => {
         videoNumber.value = 0;
         videoUrl.value = Videos.data[videoNumber.value].videoUrl;
     }
+    emit('update:video', Videos.data[videoNumber.value].title, Videos.data[videoNumber.value].username);
 };
 
 const arrowDown = () => {
@@ -40,6 +41,7 @@ const arrowDown = () => {
         videoNumber.value = Videos.data.length - 1;
         videoUrl.value = Videos.data[videoNumber.value].videoUrl;
     }
+    emit('update:video', Videos.data[videoNumber.value].title, Videos.data[videoNumber.value].username);
 };
 </script>
 
@@ -47,8 +49,9 @@ const arrowDown = () => {
     <div>
         <iframe id="video" :src="videoUrl + '?autoplay=1&mute=1&controls=1&loop=1&playlist=<videoId>'" frameborder="0"></iframe>
         <div id="buttons">
-            <button @click="arrowUp">Next</button>
             <button @click="arrowDown">Previous</button>
+            <button @click="arrowUp">Next</button>
+
         </div>
     </div>
 </template>
