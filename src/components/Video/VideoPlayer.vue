@@ -16,7 +16,7 @@ onMounted(async () => {
 
         Videos.data = data.data[0].videos;
         //emit
-        emit('update:video', Videos.data[0].title, Videos.data[0].username);
+        emit('update:video', Videos.data[0].title, Videos.data[0].username, Videos.data[0].videoUrl);
     }
 });
 
@@ -29,7 +29,7 @@ const arrowUp = () => {
         videoNumber.value = 0;
         videoUrl.value = Videos.data[videoNumber.value].videoUrl;
     }
-    emit('update:video', Videos.data[videoNumber.value].title, Videos.data[videoNumber.value].username);
+    emit('update:video', Videos.data[videoNumber.value].title, Videos.data[videoNumber.value].username, Videos.data[videoNumber.value].videoUrl);
 };
 
 const arrowDown = () => {
@@ -41,7 +41,7 @@ const arrowDown = () => {
         videoNumber.value = Videos.data.length - 1;
         videoUrl.value = Videos.data[videoNumber.value].videoUrl;
     }
-    emit('update:video', Videos.data[videoNumber.value].title, Videos.data[videoNumber.value].username);
+    emit('update:video', Videos.data[videoNumber.value].title, Videos.data[videoNumber.value].username, Videos.data[videoNumber.value].videoUrl);
 };
 </script>
 

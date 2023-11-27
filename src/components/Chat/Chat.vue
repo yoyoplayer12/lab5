@@ -1,10 +1,15 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from 'vue'
-let message = ref(''); // int, string, boolean (neemt bij typen value op)
 
-let videoUrl = ref('https://www.youtube.com/embed/dlI1AhNHqK0');
+const props = defineProps(["url"]);
+let message = ref(''); // int, string, boolean (neemt bij typen value op)
+let videoUrl = ref(props.url);
 let comments = reactive({
     data: [],
+});
+watch(() => props.url, (newUrl) => {
+  videoUrl.value = newUrl;
+  fetchComments();
 });
 const fetchComments = async () => {
     const response = await fetch(`https://lab5api.onrender.com/api/v1/comments/video/${encodeURIComponent(videoUrl.value)}`);
@@ -18,22 +23,35 @@ const fetchComments = async () => {
     }
     comments.data = data['data']['comment'];
 };
-
 onMounted(() => fetchComments());
 watch(videoUrl, () => fetchComments());
-
-
-
-
-
-
-// let allMessages = reactive({
-//     data: ["Hej Hej!", "Hej Hejjjj!", "Hej HEEEEEEJ!"],
-// }); // array, object
-// const sendMessage = () =>{
-//     allMessages.data.push(message.value);
-//     message.value = '';
-// };
+const addComment = async() => {
+    //   try {
+    //     if (this.newComment) {
+    //       const response = await fetch('https://lab5api.onrender.com/api/v1/comments', {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //           text: this.newComment,
+    //           username: this.username,
+    //           videoUrl: this.videoUrl,
+    //         }),
+    //       });
+    //       if (!response.ok) {
+    //         throw new Error(`HTTP error! status: ${response.status}`);
+    //       }
+    //       const data = await response.json();
+    //       this.comments.unshift(data['data']['comment']);
+    //       this.newComment = '';
+    //     }
+    //   }
+    //   catch (error) {
+    //     console.error('An error occurred while posting the comment:', error);
+    //   }
+    console.log('Adding comment');
+    };
 </script>
 
 <template>
@@ -47,8 +65,8 @@ watch(videoUrl, () => fetchComments());
             
         </ul>
         <div>
-            <input v-model="message" type="text" name="Comment" placeholder="Aa" id="">
-            <button @click="sendMessage">Send</button>
+            <input v-model="message" @keyup.enter="addComment" type="text" name="Comment" placeholder="Aa" id="">
+            <button @click="addComment">Send</button>
         </div>
     </div>
 </template>

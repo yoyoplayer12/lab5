@@ -6,10 +6,12 @@ import { ref } from 'vue';
 
 let newTitle = ref('');
 let newUsername = ref('');
+let newUrl = ref('');
 
-const updateVideo = (title, username) =>{
+const updateVideo = (title, username, url) =>{
   newTitle.value = title;
   newUsername.value = username;
+  newUrl.value = url;
 }
 //listen for emit description
 
@@ -22,7 +24,7 @@ const updateVideo = (title, username) =>{
     </div>
     <div>
       <VideoDetails :title="newTitle" :username="newUsername" />
-      <Chat />
+      <Chat :url="newUrl" />
     </div>
   </div>
 </template>
